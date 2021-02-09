@@ -645,4 +645,4 @@ function  playAgain(){
 
 Il ne nous reste plus qu'à rajouter notre API pour sauvegarder nos meilleur résultat en base de données.
 
-## On se donne rendez-vous dans le dossier [server](https://github.com/tashikomaaa/O-Clock-memory/tree/main/server) !
+## On se donne rendez-vous dans le dossier [server](server.md) !
