@@ -17,7 +17,6 @@ Aujourd'hui on va créer un **jeu de memory** !
 
 Pour les besoins de ce projet on va travailler et découvrir les outils suivants:
 
-- Docker
 - Node.js
 - Css
 - Html 5

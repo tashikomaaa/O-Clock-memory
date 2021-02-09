@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+require('dotenv').config()
 
 const port = 3000;
 
@@ -12,7 +13,7 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
 
-
+console.log(process.env.DB_HOST)
 
 // recupère le HOST depuis Environment ou utilise le defaut
 const host = process.env.DB_HOST || 'localhost';
