@@ -82,11 +82,26 @@ Voilà pour le setup de la DB.
 
 On va avoir besoin de plusieurs outils
 
-```
+```shell
 npm i -S express body-parser
 ```
 
-On va modifier dans 
+Maintenant, nous configurons le serveur d'application express de base avec le fichier `server.js` suivant:
+
+```js
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+```
+
+Comme vous pouvez le voir, comme avec l'appel de fonction app.get
+Nous définissons une Route sur notre serveur
+Le serveur répondra aux appels GET pour cette route
+Le rappel le traitera de la manière suivante:
 
 
 
