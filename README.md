@@ -22,7 +22,7 @@ Pour les besoins de ce projet on va travailler et découvrir les outils suivants
 - Css
 - Html 5
 - JavaScript vanilla
-- Mysql ou MongoDb (au choix, je ne veux pas imposer mon choix je ferais donc deux socle différents)
+- Mysql
 
 ## Déscription du projet
 
