@@ -576,13 +576,19 @@ On y va !
 
 Dans notre fichier `app.js` on peut donc écrire :
 
+tout d'abord on a besoin de notre modal:
+```
+// declare modal
+let  modalWin = document.getElementById("popup1");
+```
+ensuite la fonction pour l'afficher:
 ```
 function  congratulations(){
 	if (matchedCard.length == 16){
 		clearInterval(interval);
 		finalTime = timer.innerHTML;
 		// on montre la modal si on a toutes les cartes matcher
-		modal.classList.add("show");
+		modalWin.classList.add("show");
 		document.getElementById("totalTime").innerHTML = finalTime;
 		// on ferme la modal
 		closeModal();
@@ -593,7 +599,7 @@ pour fermer la modal:
 ```
 function  closeModal(){
 	closeicon.addEventListener("click", function(e){
-		modal.classList.remove("show");
+		modalWin.classList.remove("show");
 		startGame();
 	});
 }
@@ -602,6 +608,77 @@ Et pour le bouton rejouer :
 ```
 function  playAgain(){
 	modal.classList.remove("show");
+	startGame();
+}
+```
+
+Maintenant que l'on à notre condition de victoire qui est faite il nous faut notre condition de défaite !
+Je sais c'est pas super de devoir penser à ça mais bon pas le choix !
+
+On va donc devoir faire en sorte que lorsque le temps c'est écouler une modal s'ouvre si le joueur n'a pas retourner toutes les cartes.
+
+Pour ce faire on va ajouter dans notre `ìndex.html` :
+```
+<div  id="popup2"  class="overlay">
+	<div  class="popup">
+		<h2>Perdu</h2>
+		<a  class="close"  href=#  >×</a>
+		<div  class="content-1">
+			Tu à dépasser le temps donné !
+		</div>
+		<button  id="play-again"onclick="playAgain()">
+			jouer encore ? 😄</a>
+		</button>
+	</div>
+</div>
+```
+
+Et dans notre fichier `app.js` :
+on va recupérer notre modal, en dessous de la déclaration de la modalWin 
+```
+let  modalLoose = document.getElementById("popup2");
+```
+
+ensuite pour l'ouvrir quand le temps est fini il faut donc aller dans la fonction timer:
+```
+function  startTimer(duration, display) {
+	var  timer = duration, minutes, seconds;
+	setInterval(function () {
+		minutes = parseInt(timer / 60, 10)
+		seconds = parseInt(timer % 60, 10);
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+		display.innerHTML = minutes + " min " + seconds + " secs";
+		if (--timer < 0) {
+			loose() // on rajoute ici l'appel a notre fonction loose
+			timer = duration;
+		}
+	}, 1000);
+}
+```
+
+Et enfin la fonction loose:
+```
+function  loose() {
+	clearInterval(interval);
+	modalLoose.classList.add("show");
+	closeModal();
+};
+```
+
+Maintenant on va devoir ajouter notre modalLoose dans nos fonction closeModal et playAgain, pour ça il suffit de copier la modalWin et de lui changer sont nom:
+```
+function  closeModal(){
+	closeicon.addEventListener("click", function(e){
+		modalWin.classList.remove("show");
+		modalLoose.classList.remove("show");
+		startGame();
+	});
+} 
+
+function  playAgain(){
+	modalWin.classList.remove("show");
+	modalLoose.classList.remove("show");
 	startGame();
 }
 ```

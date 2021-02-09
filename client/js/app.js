@@ -12,7 +12,8 @@ let matchedCard = document.getElementsByClassName("match");
  let closeicon = document.querySelector(".close");
 
  // declare modal
- let modal = document.getElementById("popup1")
+ let modalWin = document.getElementById("popup1");
+ let modalLoose = document.getElementById("popup2");
 
  // array fpour les cartes "ouvertes"
 var openedCards = [];
@@ -50,7 +51,7 @@ function  startGame(){
 	//reset le timer
 	var  twoMinutes = 60 * 2;
 	var  display = document.querySelector('.timer');
-	startTimer(twoMinutes, display);
+	startTimer(30, display);
 	display.innerHTML = "2 mins 0 secs";
 	clearInterval(interval);
 }
@@ -126,6 +127,7 @@ function startTimer(duration, display) {
         display.innerHTML = minutes + " min " + seconds + " secs";
 
         if (--timer < 0) {
+            loose()
             timer = duration;
         }
     }, 1000);
@@ -136,23 +138,29 @@ function  congratulations(){
 		clearInterval(interval);
 		finalTime = timer.innerHTML;
 		// on montre la modal si on a toutes les cartes matcher
-		modal.classList.add("show");
+		modalWin.classList.add("show");
 		document.getElementById("totalTime").innerHTML = finalTime;
 		// on ferme la modal
 		closeModal();
 	};
 }
+function loose() {
+		clearInterval(interval);
+		modalLoose.classList.add("show");
+		closeModal();
+};
 
 function closeModal(){
     closeicon.addEventListener("click", function(e){
-        modal.classList.remove("show");
+        modalWin.classList.remove("show");
+        modalLoose.classList.remove("show");
         startGame();
     });
 }
 
-
 function playAgain(){
-    modal.classList.remove("show");
+    modalWin.classList.remove("show");
+    modalLoose.classList.remove("show");
     startGame();
 }
 
