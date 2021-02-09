@@ -126,27 +126,6 @@ h1 {
 	margin-bottom: 10px;
 }
 
-.score-panel .stars {
-	margin: 0;
-	padding: 0;
-	display: inline-block;
-	margin: 0 5px 0 0;
-}
-
-.score-panel .stars li {
-	list-style: none;
-	display: inline-block;
-}
-
-.score-panel .restart {
-	float: right;
-	cursor: pointer;
-}
-
-.fa-star {
-	color: #FFD700;
-}
-
 .timer {
 	display: inline-block;
 	margin: 0 1rem;
@@ -217,10 +196,6 @@ h1 {
 .show {
 	visibility: visible !important;
 	opacity: 100 !important;
-}
-
-#starRating li {
-	display: inline-block;
 }
 
 #play-again {

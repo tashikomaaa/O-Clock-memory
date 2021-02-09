@@ -1,4 +1,3 @@
-# O-Clock-memory
 # Bienvenu à vous !
 
 Salut à tous, tout d'abord on va vérifier que l'on dispose tous du même environement de travail (histoire de se facilité la tache).
@@ -280,6 +279,70 @@ body {
 }
 ```
 
+il ne nous reste plus qu'a écrire nos animations:
+```
+/* animations */
+
+@keyframes  flipInY {
+	from {
+		transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+		animation-timing-function: ease-in;
+		opacity: 0;
+	}
+	40% {
+		transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+		animation-timing-function: ease-in;
+	}
+	60% {
+		transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+		opacity: 1;
+	}
+	80% {
+		transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+	}
+	to {
+		transform: perspective(400px);
+	}
+}
+
+@keyframes  rubberBand {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+	30% {
+		transform: scale3d(1.25, 0.75, 1);
+	}
+	40% {
+		transform: scale3d(0.75, 1.25, 1);
+	}
+	50% {
+		transform: scale3d(1.15, 0.85, 1);
+	}
+	65% {
+		transform: scale3d(.95, 1.05, 1);
+	}
+	75% {
+		transform: scale3d(1.05, .95, 1);
+	}
+	to {
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+@keyframes  pulse {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+	50% {
+		transform: scale3d(1.2, 1.2, 1.2);
+	}
+	to {
+		transform: scale3d(1, 1, 1);
+	}
+}
+```
+
+
 ### Ce que nous faisont ici
 Nous faisons en sorte de retourner les cartes et d'afficher les images lorsque la class de la carte change.
 Et pour que tou ceci fonctionne on va pouvoir ajouter dans le head de notre fichier `index.html`:
@@ -329,6 +392,15 @@ on a besoin d'une variable pour les cartes "matcher":
 ```
 // déclaration de la variable pour les cartes matcher
 let  matchedCard = document.getElementsByClassName("match");
+```
+on va avoir besoin de donner a nos cartes des events:
+```
+for (var  i = 0; i < cards.length; i++){
+	card = cards[i];
+	card.addEventListener("click", displayCard);
+	card.addEventListener("click", cardOpen);
+	card.addEventListener("click",congratulations);
+};
 ```
 
 
@@ -386,6 +458,170 @@ function  startGame(){
 	clearInterval(interval);
 }
 ```
+
+on créer une variable pour les class pour show, open et disabled:
+```
+var  displayCard = function (){
+	this.classList.toggle("open");
+	this.classList.toggle("show");
+	this.classList.toggle("disabled");
+};
+```
+Maintenant on va ajouter les cartes ouvertes dans le tableau des cartes ouvertes (oui c'est plutot logique vous me direz) et on va vérifez si elles sont les mêmes
+```
+function  cardOpen() {
+	openedCards.push(this);
+	var  len = openedCards.length;
+	if(len === 2){
+		if(openedCards[0].type === openedCards[1].type){
+			matched();
+		} else {
+			unmatched();
+		}
+	}
+};
+```
+
+Pour les cartes Matched:
+```
+function  matched(){
+	openedCards[0].classList.add("match", "disabled");
+	openedCards[1].classList.add("match", "disabled");
+	openedCards[0].classList.remove("show", "open", "no-event");
+	openedCards[1].classList.remove("show", "open", "no-event");
+	openedCards = [];
+} 
+```
+
+Pour les cartes unmatched:
+```
+function  unmatched(){
+	openedCards[0].classList.add("unmatched");
+	openedCards[1].classList.add("unmatched");
+	disable();
+	setTimeout(function(){
+		openedCards[0].classList.remove("show", "open", "no-event","unmatched");
+		openedCards[1].classList.remove("show", "open", "no-event","unmatched");
+		enable();
+		openedCards = [];
+	},1100);
+}
+```
+et enfin pour les cartes matched on les disabled:
+```
+function  disable(){
+	Array.prototype.filter.call(cards, function(card){
+		card.classList.add('disabled');
+	});
+}
+function  enable(){
+	Array.prototype.filter.call(cards, function(card){
+		card.classList.remove('disabled');
+		for(var  i = 0; i < matchedCard.length; i++){
+			matchedCard[i].classList.add("disabled");
+		}
+	});
+}
+```
+
+Maintenant le timer :
+```
+var  second = 0, minute = 2; hour = 0;
+var  timer = document.querySelector(".timer");
+var  interval;
+function  startTimer(duration, display) {
+	var  timer = duration, minutes, seconds;
+	setInterval(function () {
+		minutes = parseInt(timer / 60, 10)
+		seconds = parseInt(timer % 60, 10);
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+		display.innerHTML = minutes + " min " + seconds + " secs";
+		if (--timer < 0) {
+			timer = duration;
+		}
+	}, 1000);
+}
+```
+
+## YEAH notre jeu fonctionne !
+
+Mais il nous manque encore quelque petites chose !
+
+On va faire une modal pour afficher la victoire ou la défaite de nos joueurs.
+
+Dans notre html on va donc pouvoir ajouter  :
+
+```
+<div  id="popup1"  class="overlay">
+	<div  class="popup">
+		<h2>Bravo 🎉</h2>
+		<a  class="close"  href=#  >×</a>
+		<div  class="content-1">
+			Bravo vous tu à gagner 🎉🎉
+		</div>
+		<div  class="content-2">
+			<p>avec comme temps <span  id=totalTime>  </span>  </p>
+		</div>
+		<button  id="play-again"onclick="playAgain()">
+			jouer encore ? 😄</a>
+		</button>
+	</div>
+</div>
+```
+
+La on a donc une modal qui va s'ouvrir quand on fini le jeu, mais il faut encore ecrire la logique pour qu'elle s'ouvre.
+
+On y va !
+
+Dans notre fichier `app.js` on peut donc écrire :
+
+```
+function  congratulations(){
+	if (matchedCard.length == 16){
+		clearInterval(interval);
+		finalTime = timer.innerHTML;
+		// on montre la modal si on a toutes les cartes matcher
+		modal.classList.add("show");
+		document.getElementById("totalTime").innerHTML = finalTime;
+		// on ferme la modal
+		closeModal();
+	};
+}
+```
+pour fermer la modal:
+```
+function  closeModal(){
+	closeicon.addEventListener("click", function(e){
+		modal.classList.remove("show");
+		startGame();
+	});
+}
+```
+Et pour le bouton rejouer :
+```
+function  playAgain(){
+	modal.classList.remove("show");
+	startGame();
+}
+```
+
+## Et voilà !
+
+
+Il ne nous reste plus qu'à rajouter notre API pour sauvegarder nos meilleur résultat en base de données.
+
+ # L'API
+
+
+
+
+
+
+
+
+
+
 
 
 

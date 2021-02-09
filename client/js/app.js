@@ -56,31 +56,25 @@ function  startGame(){
 }
 
 
-// @description toggles open and show class to display cards
-var displayCard = function (){
-    this.classList.toggle("open");
-    this.classList.toggle("show");
-    this.classList.toggle("disabled");
+var  displayCard = function (){
+	this.classList.toggle("open");
+	this.classList.toggle("show");
+	this.classList.toggle("disabled");
+};
+
+function  cardOpen() {
+	openedCards.push(this);
+	var  len = openedCards.length;
+	if(len === 2){
+		if(openedCards[0].type === openedCards[1].type){
+			matched();
+		} else {
+			unmatched();
+		}
+	}
 };
 
 
-// @description add opened cards to OpenedCards list and check if cards are match or not
-function cardOpen() {
-    openedCards.push(this);
-    
-    var len = openedCards.length;
-    if(len === 2){
-        
-        if(openedCards[0].type === openedCards[1].type){
-            matched();
-        } else {
-            unmatched();
-        }
-    }
-};
-
-
-// @description when cards match
 function matched(){
     openedCards[0].classList.add("match", "disabled");
     openedCards[1].classList.add("match", "disabled");
@@ -90,7 +84,6 @@ function matched(){
 }
 
 
-// @description when cards don't match
 function unmatched(){
     openedCards[0].classList.add("unmatched");
     openedCards[1].classList.add("unmatched");
@@ -103,16 +96,12 @@ function unmatched(){
     },1100);
 }
 
-
-// @description disable cards temporarily
 function disable(){
     Array.prototype.filter.call(cards, function(card){
         card.classList.add('disabled');
     });
 }
 
-
-// @description enable cards and disable matched cards
 function enable(){
     Array.prototype.filter.call(cards, function(card){
         card.classList.remove('disabled');
@@ -122,7 +111,6 @@ function enable(){
     });
 }
 
-// @description game timer
 var second = 0, minute = 2; hour = 0;
 var timer = document.querySelector(".timer");
 var interval;
@@ -143,24 +131,18 @@ function startTimer(duration, display) {
     }, 1000);
 }
 
-
-// @description congratulations when all cards match, show modal and moves, time and rating
-function congratulations(){
-    if (matchedCard.length == 16){
-        clearInterval(interval);
-        finalTime = timer.innerHTML;
-
-        // show congratulations modal
-        modal.classList.add("show");
-        document.getElementById("totalTime").innerHTML = finalTime;
-
-        //closeicon on modal
-        closeModal();
-    };
+function  congratulations(){
+	if (matchedCard.length == 16){
+		clearInterval(interval);
+		finalTime = timer.innerHTML;
+		// on montre la modal si on a toutes les cartes matcher
+		modal.classList.add("show");
+		document.getElementById("totalTime").innerHTML = finalTime;
+		// on ferme la modal
+		closeModal();
+	};
 }
 
-
-// @description close icon on modal
 function closeModal(){
     closeicon.addEventListener("click", function(e){
         modal.classList.remove("show");
@@ -169,7 +151,6 @@ function closeModal(){
 }
 
 
-// @desciption for user to play Again 
 function playAgain(){
     modal.classList.remove("show");
     startGame();
