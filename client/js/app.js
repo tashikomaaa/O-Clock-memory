@@ -9,7 +9,8 @@ const deck = document.getElementById("deck-carte");
 let matchedCard = document.getElementsByClassName("match");
 
  // close icon in modal
- let closeicon = document.querySelector(".close");
+ let closeWin = document.querySelector(".closeWin");
+ let closeLoose = document.querySelector(".closeLoose");
 
  // declare modal
  let modalWin = document.getElementById("popup1");
@@ -151,11 +152,14 @@ function loose() {
 };
 
 function closeModal(){
-    closeicon.addEventListener("click", function(e){
+    closeWin.addEventListener("click", function(e){
         modalWin.classList.remove("show");
-        modalLoose.classList.remove("show");
         startGame();
     });
+    closeLoose.addEventListener("click", function(e){
+        modalLoose.classList.remove("show");
+        startGame();
+    })
 }
 
 function playAgain(){
