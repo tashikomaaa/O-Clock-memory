@@ -32,37 +32,27 @@ function  shuffle(array) {
 	return  array; // une fois fini on retourne le paquet de cartes
 };
 
-
-// @description on mélange les ca
 document.body.onload = startGame();
 
-
-// @description function to start a new play 
-function startGame(){
- 
-    // empty the openCards array
-    openedCards = [];
-
-    // shuffle deck
-    cards = shuffle(cards);
-    // remove all exisiting classes from each card
-    for (var i = 0; i < cards.length; i++){
-        deck.innerHTML = "";
-        [].forEach.call(cards, function(item) {
-            deck.appendChild(item);
-        });
-        cards[i].classList.remove("show", "open", "match", "disabled");
-    }
-    //reset timer
-    second = 0;
-    minute = 2; 
-    hour = 0;
-    var twoMinutes = 60 * 2;
-    var display = document.querySelector('.timer');
-    startTimer(twoMinutes, display);
-    var display = document.querySelector('.timer');
-    display.innerHTML = "2 mins 0 secs";
-    clearInterval(interval);
+function  startGame(){
+	// on vide le tableau des cartes ouvertes
+	openedCards = [];
+	// on mélange les cartes
+	cards = shuffle(cards);
+	// on enlève toutes les class ajouter au cartes
+	for (var  i = 0; i < cards.length; i++){
+		deck.innerHTML = "";
+		[].forEach.call(cards, function(item) {
+			deck.appendChild(item);
+		});
+		cards[i].classList.remove("show", "open", "match", "disabled");
+	}
+	//reset le timer
+	var  twoMinutes = 60 * 2;
+	var  display = document.querySelector('.timer');
+	startTimer(twoMinutes, display);
+	display.innerHTML = "2 mins 0 secs";
+	clearInterval(interval);
 }
 
 
