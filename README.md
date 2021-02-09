@@ -688,17 +688,6 @@ function  playAgain(){
 
 Il ne nous reste plus qu'à rajouter notre API pour sauvegarder nos meilleur résultat en base de données.
 
- # L'API
-
-
-
-
-
-
-
-
-
-
-
+## On se donne rendez-vous dans le dossier server !
 
 
