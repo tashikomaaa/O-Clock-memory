@@ -22,7 +22,7 @@ Pour les besoins de ce projet on va travailler et découvrir les outils suivants
 - Css
 - Html 5
 - JavaScript vanilla
-- Mysql
+- MongoDB
 
 ## Déscription du projet
 
