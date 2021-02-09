@@ -78,6 +78,15 @@ Connexion maintenant à l'aide de la commande
 
 Voilà pour le setup de la DB.
 
+### Maintenant le server
+
+On va avoir besoin de plusieurs outils
+
+```
+npm i -S express body-parser
+```
+
+On va modifier dans 
 
 
 

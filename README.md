@@ -58,7 +58,7 @@ Pour ce faire on créer dans notre dossier `client` un fichier `index.html`.
 
 On va pouvoir y écrire en premier la base d'un fichier HTML 5.
 
-```
+```html
 <!DOCTYPE  html>
 <html  lang="fr">
 <head>
@@ -77,7 +77,7 @@ On va pouvoir y écrire en premier la base d'un fichier HTML 5.
 Maintenant que l'on a notre squellette de base on peut y ajouter notre grille.
 On va d'abord créer un container dans lequel on va placer une liste avec comme id `deck-carte` et comme class `deck` :
 
-```
+```html
 <div  class="container">
 	<ul  class="deck"  id="deck-carte">
 	</ul>
@@ -86,55 +86,55 @@ On va d'abord créer un container dans lequel on va placer une liste avec comme 
 
 ensuite on ajoute nos cartes :
 
-```
+```html
 <ul  class="deck"  id="deck-carte">
 	<li  class="card"  type="js">
-	<image  src="images/js.png" />
+	<img  src="images/js.png" />
 	</li>
 	<li  class="card"  type="github">
-	<image  src="images/github.png" />
+	<img  src="images/github.png" />
 	</li>
 	<li  class="card match"  type="node">
-	<image  src="images/node.png" />
+	<img  src="images/node.png" />
 	</li>
 	<li  class="card"  type="oclock"  >
-	<image  src="images/oclock.png" />
+	<img  src="images/oclock.png" />
 	</li>
 	<li  class="card"  type="ubuntu">
-	<image  src="images/ubuntu.png" />
+	<img  src="images/ubuntu.png" />
 	</li>
 	<li  class="card match"  type="node">
-	<image  src="images/node.png" />
+	<img  src="images/node.png" />
 	</li>
 	<li  class="card"  type="html">
-	<image  src="images/html-5.png" />
+	<img  src="images/html-5.png" />
 	</li>
 	<li  class="card"  type="css">
-	<image  src="images/css-3.png" />
+	<img  src="images/css-3.png" />
 	</li>
 	<li  class="card"  type="js">
-	<image  src="images/js.png" />
+	<img  src="images/js.png" />
 	</li>
 	<li  class="card"  type="vscode">
-	<image  src="images/vscode.png" />
+	<img  src="images/vscode.png" />
 	</li>
 	<li  class="card"  type="html">
-	<image  src="images/html-5.png" />
+	<img  src="images/html-5.png" />
 	</li>
 	<li  class="card"  type="vscode">
-	<image  src="images/vscode.png" />
+	<img  src="images/vscode.png" />
 	</li>
 	<li  class="card open show"  type="oclock">
-	<image  src="images/oclock.png" />
+	<img  src="images/oclock.png" />
 	</li>
 	<li  class="card"  type="css">
-	<image  src="images/css-3.png" />
+	<img  src="images/css-3.png" />
 	</li>
 	<li  class="card"  type="github">
-	<image  src="images/github.png" />
+	<img  src="images/github.png" />
 	</li>
 	<li  class="card"  type="ubuntu">
-	<image  src="images/ubuntu.png" />
+	<img  src="images/ubuntu.png" />
 	</li>
 </ul>
 ```
@@ -152,7 +152,7 @@ tout d'abord on créer dans `client` un dossier `css`, dans lequel on créer un 
 Dans notre fichier `app.css` on aura donc:
 
 - pour la page :
-```
+```css
 html {
 	box-sizing: border-box;
 }
@@ -186,7 +186,7 @@ body {
 ```
 
 - pour le deck:
-```
+```css
 .deck {
 	width: 90%;
 	background: #716F71;
@@ -226,7 +226,7 @@ body {
 
 ### Lorsque les cartes sont face ouverte:
 
-```
+```css
 .deck  .card.open {
 	transform: rotateY(0);
 	background: #33FFDD;
@@ -244,7 +244,7 @@ body {
 ```
 
 ### Lorsque les cartes  les mêmes :
-```
+```css
 .deck  .card.match {
 	cursor: default;
 	background: #33FF4C;
@@ -261,7 +261,7 @@ body {
 ```
 
 ### Lorsque les cartes ne sont pas les même :
-```
+```css
 .deck  .card.unmatched {
 	animation-name: pulse;
 	-webkit-backface-visibility: visible  !important;
@@ -272,7 +272,7 @@ body {
 ```
 
 ### et pour finir quand les cartes ne sont plus clickable(elle ont étées matcher avec une autres):
-```
+```css
 .deck  .card.disabled {
 	pointer-events: none;
 	opacity: 0.9;
@@ -280,7 +280,7 @@ body {
 ```
 
 il ne nous reste plus qu'a écrire nos animations:
-```
+```css
 /* animations */
 
 @keyframes  flipInY {
@@ -346,7 +346,7 @@ il ne nous reste plus qu'a écrire nos animations:
 ### Ce que nous faisont ici
 Nous faisons en sorte de retourner les cartes et d'afficher les images lorsque la class de la carte change.
 Et pour que tou ceci fonctionne on va pouvoir ajouter dans le head de notre fichier `index.html`:
-```
+```html
 	<link  rel="stylesheet"  href="css/app.css">
 ```
 
@@ -375,7 +375,7 @@ On va donc avoir besoin dans notre dossier `client`, dun' dossier `js` dans lequ
 On va donc commencer par récuperer nos cartes et les placer dans un tableau.
 
 Pour ce faire on va pouvoir ecrire :
-```
+```js
 // tableau de cartes
 
 let  card = document.getElementsByClassName("card"); // on recupère tout les elements qui ont la class card
@@ -383,18 +383,18 @@ let  cards = [...card]; // on les places dans un tableau
 ```
 
 on va aussi avoir besoin du deck avec toutes les cartes
-```
+```js
 // deck de toutes les cartes en jeu
 const  deck = document.getElementById("deck-carte");
 ```
 
 on a besoin d'une variable pour les cartes "matcher":
-```
+```js
 // déclaration de la variable pour les cartes matcher
 let  matchedCard = document.getElementsByClassName("match");
 ```
 on va avoir besoin de donner a nos cartes des events:
-```
+```js
 for (var  i = 0; i < cards.length; i++){
 	card = cards[i];
 	card.addEventListener("click", displayCard);
@@ -412,7 +412,7 @@ En premier on va avoir besoin de les mélanger.
 On va donc créer une fonction shuffle, qui va prendre un array en argument et retourner un array.
 A l'intérieur on va randomiser l'index de nos cartes.
 
-```
+```js
 function  shuffle(array) {
 	var  currentIndex = array.length, temporaryValue, randomIndex; // vaut le nombre total de cartes
 
@@ -430,13 +430,13 @@ function  shuffle(array) {
 
 Au chargement/reload de la page on lance le jeu
 
-```
+```js
 document.body.onload = startGame(); // quand la page est chargée ou reload on lance le jeu
 ```
 
 Maintenant la fonction qui lance le jeu 
 
-```
+```js
 function  startGame(){
 	// on vide le tableau des cartes ouvertes
 	openedCards = [];
@@ -460,7 +460,7 @@ function  startGame(){
 ```
 
 on créer une variable pour les class pour show, open et disabled:
-```
+```js
 var  displayCard = function (){
 	this.classList.toggle("open");
 	this.classList.toggle("show");
@@ -468,7 +468,7 @@ var  displayCard = function (){
 };
 ```
 Maintenant on va ajouter les cartes ouvertes dans le tableau des cartes ouvertes (oui c'est plutot logique vous me direz) et on va vérifez si elles sont les mêmes
-```
+```js
 function  cardOpen() {
 	openedCards.push(this);
 	var  len = openedCards.length;
@@ -483,7 +483,7 @@ function  cardOpen() {
 ```
 
 Pour les cartes Matched:
-```
+```js
 function  matched(){
 	openedCards[0].classList.add("match", "disabled");
 	openedCards[1].classList.add("match", "disabled");
@@ -494,7 +494,7 @@ function  matched(){
 ```
 
 Pour les cartes unmatched:
-```
+```js
 function  unmatched(){
 	openedCards[0].classList.add("unmatched");
 	openedCards[1].classList.add("unmatched");
@@ -508,7 +508,7 @@ function  unmatched(){
 }
 ```
 et enfin pour les cartes matched on les disabled:
-```
+```js
 function  disable(){
 	Array.prototype.filter.call(cards, function(card){
 		card.classList.add('disabled');
@@ -525,7 +525,7 @@ function  enable(){
 ```
 
 Maintenant le timer :
-```
+```js
 var  second = 0, minute = 2; hour = 0;
 var  timer = document.querySelector(".timer");
 var  interval;
@@ -552,7 +552,7 @@ On va faire une modal pour afficher la victoire ou la défaite de nos joueurs.
 
 Dans notre html on va donc pouvoir ajouter  :
 
-```
+```html
 <div  id="popup1"  class="overlay">
 	<div  class="popup">
 		<h2>Bravo 🎉</h2>
@@ -577,12 +577,12 @@ On y va !
 Dans notre fichier `app.js` on peut donc écrire :
 
 tout d'abord on a besoin de notre modal:
-```
+```js
 // declare modal
 let  modalWin = document.getElementById("popup1");
 ```
 ensuite la fonction pour l'afficher:
-```
+```js
 function  congratulations(){
 	if (matchedCard.length == 16){
 		clearInterval(interval);
@@ -596,7 +596,7 @@ function  congratulations(){
 }
 ```
 pour fermer la modal:
-```
+```js
 function  closeModal(){
 	closeicon.addEventListener("click", function(e){
 		modalWin.classList.remove("show");
@@ -605,7 +605,7 @@ function  closeModal(){
 }
 ```
 Et pour le bouton rejouer :
-```
+```js
 function  playAgain(){
 	modal.classList.remove("show");
 	startGame();
@@ -618,7 +618,7 @@ Je sais c'est pas super de devoir penser à ça mais bon pas le choix !
 On va donc devoir faire en sorte que lorsque le temps c'est écouler une modal s'ouvre si le joueur n'a pas retourner toutes les cartes.
 
 Pour ce faire on va ajouter dans notre `ìndex.html` :
-```
+```html
 <div  id="popup2"  class="overlay">
 	<div  class="popup">
 		<h2>Perdu</h2>
@@ -635,12 +635,12 @@ Pour ce faire on va ajouter dans notre `ìndex.html` :
 
 Et dans notre fichier `app.js` :
 on va recupérer notre modal, en dessous de la déclaration de la modalWin 
-```
+```js
 let  modalLoose = document.getElementById("popup2");
 ```
 
 ensuite pour l'ouvrir quand le temps est fini il faut donc aller dans la fonction timer:
-```
+```js
 function  startTimer(duration, display) {
 	var  timer = duration, minutes, seconds;
 	setInterval(function () {
@@ -658,7 +658,7 @@ function  startTimer(duration, display) {
 ```
 
 Et enfin la fonction loose:
-```
+```js
 function  loose() {
 	clearInterval(interval);
 	modalLoose.classList.add("show");
@@ -667,7 +667,7 @@ function  loose() {
 ```
 
 Maintenant on va devoir ajouter notre modalLoose dans nos fonction closeModal et playAgain, pour ça il suffit de copier la modalWin et de lui changer sont nom:
-```
+```js
 function  closeModal(){
 	closeicon.addEventListener("click", function(e){
 		modalWin.classList.remove("show");
