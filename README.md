@@ -6,7 +6,6 @@ Pour ma part je travail avec:
 
 - visual studio code
 - sous-system linux pour windows (WSL)
-- Docker pour windows
 
 
 # Le projet
