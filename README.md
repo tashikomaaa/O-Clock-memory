@@ -38,5 +38,6 @@ Avant le début du jeu, les meilleurs temps s’affichent à l’écran.
 
 # On est parti !
 
-Le [Client](doc/client.md)
+- Le [Client](doc/client.md)
+- Le [Serveur](doc/server.md)
 
