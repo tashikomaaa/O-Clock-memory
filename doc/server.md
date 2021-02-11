@@ -7,7 +7,9 @@ Pour ça j'ai choisie Mysql, plus répendu et plus rapide à prendre en main.
 
 ### La base de données
 
-On aura besoin d'une base de donées qui va s'appeller `oclock` avec une table `players` qui dispose de deux row `name - varchar/ unique` et `score - int`
+On aura besoin d'une base de donées qui va s'appeller `oclock`.
+
+recupérer le fichier sql dans le dossier server/config/db.setup.sql et impoirter le dans votre db.
 
 Voilà pour le setup de la DB.
 
@@ -169,4 +171,6 @@ connection.connect(error => {
 
 module.exports = connection;
 ```
+
+Et voilà si vous avez tout bien suivie on a fini !
 
