@@ -6,7 +6,6 @@ Pour ma part je travail avec:
 
 - visual studio code
 - sous-system linux pour windows (WSL)
-- Docker pour windows
 
 
 # Le projet
@@ -39,5 +38,6 @@ Avant le début du jeu, les meilleurs temps s’affichent à l’écran.
 
 # On est parti !
 
-poru le [Client](doc/client.md)
+- Le [Client](doc/client.md)
+- Le [Serveur](doc/server.md)
 
