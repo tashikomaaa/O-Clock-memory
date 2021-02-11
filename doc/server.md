@@ -7,6 +7,8 @@ Pour ça j'ai choisie Mysql, plus répendu et plus rapide à prendre en main.
 
 ### La base de données
 
+On aura besoin d'une base de donées qui va s'appeller `oclock` avec une table `players` qui dispose de deux row `name - varchar/ unique` et `score - int`
+
 Voilà pour le setup de la DB.
 
 ##
@@ -119,4 +121,52 @@ app.listen(port, () => {
 ```
 
 
+On va Pouvoir créer deux dossier:
+- un pour la config de la connection
+- un pour la connection elle même
+
+Comme suit:
+
+```
+-server
+    -config
+        -db.config.js
+    -models
+        -db.js
+```
+
+
+dans le fichiers db.config.js
+
+```js
+module.exports = {
+    HOST: "localhost",
+    USER: "root",
+    PASSWORD: "MOT_DE_PASSE",
+    DB: "oclock"
+  };
+```
+
+dans le fichiers db.js 
+
+```js
+const mysql = require("mysql");
+const dbConfig = require("../config/db.config.js");
+
+// Create a connection to the database
+const connection = mysql.createConnection({
+  host: dbConfig.HOST,
+  user: dbConfig.USER,
+  password: dbConfig.PASSWORD,
+  database: dbConfig.DB
+});
+
+// open the MySQL connection
+connection.connect(error => {
+  if (error) throw error;
+  console.log("Successfully connected to the database.");
+});
+
+module.exports = connection;
+```
 
