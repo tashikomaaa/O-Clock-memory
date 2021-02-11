@@ -9,7 +9,7 @@ Pour ça j'ai choisie Mysql, plus répendu et plus rapide à prendre en main.
 
 On aura besoin d'une base de donées qui va s'appeller `oclock`.
 
-recupérer le fichier sql dans le dossier server/config/db.setup.sql et impoirter le dans votre db.
+recupérer le fichier sql dans le dossier [server/config/db.setup.sql](../server/config/db.setup.sql) et impoirter le dans votre db.
 
 Voilà pour le setup de la DB.
 
