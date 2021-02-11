@@ -135,40 +135,56 @@ npm i -S mysql
 Après avoir installé `mysql`, nous pouvons écrire notre code de base pour nous connecter à la base de données, puis obtenir des données d'une table. Il peut s'écrire comme suit:
 
 ```js
-const mysql = require('mysql');
+const express = require('express');
+const bodyParser = require("body-parser");
+const sql = require('./models/db.js');
+const app = express();
 
-// recupère le HOST depuis Environment ou utilise le defaut
-const host = process.env.DB_HOST || 'localhost';
+// parse requests of content-type: application/json
+app.use(bodyParser.json());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
 
-// recupère l'utilisateur depuis Environment ou utilise le default
-const user = process.env.DB_USER || 'root';
+// parse requests of content-type: application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+const port = 3000;
 
-// recupère le Password pour la DB depuis Environment ou utilise le default
-const password = process.env.DB_PASS || '';
-
-// recupère la Database depuis Environment ou utilise default
-const database = process.env.DB_DATABASE || 'oclock';
-
-//   Créez la connexion avec les détails requis
-const con = mysql.createConnection({
-  host, user, password, database,
+app.get('/', (req, res) => {
+  res.json({ message: "Bienvenu sur l'API Oclock memory" });
 });
 
-const query = "SELECT * FROM tweets";
- 
-// établir une connexion à la base de données.
-con.connect(function(err) {
-  if (err) throw err;
-
-  // si la connexion est réussie
-  con.query(query, (err, result, fields) => {
-    // si une erreur lors de l'exécution de la requête ci-dessus, renvoie une erreur
-    if (err) throw err;
-
-    //   s'il n'y a pas d'erreur, vous avez le résultat
-    console.log(result);
- });
+// Get the best score
+app.get('/best', (req, res) => {
+  sql.query('select name, MAX(score) as score from players',(err, result) => {   
+    if (err) {
+        console.log("error: ", err);
+        return;
+      }
+      res.send(result);
+    });
 });
+
+''
+// Create a new or Update player
+app.post("/player",  (req, res) => {
+  sql.query(`INSERT INTO players (name, score) VALUES ('${req.body.name}', ${req.body.score}) ON DUPLICATE KEY UPDATE score = ${req.body.score};`,
+  (err, result) => {
+        
+    if (err) {
+        console.log("error: ", err);
+        return;
+      }
+      res.send(result);
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+});
+
 ```
 
 
