@@ -9,16 +9,31 @@ const deck = document.getElementById("deck-carte");
 let matchedCard = document.getElementsByClassName("match");
 
  // close icon in modal
+ let closeStart = document.querySelector('.closeStart');
  let closeWin = document.querySelector(".closeWin");
  let closeLoose = document.querySelector(".closeLoose");
 
  // declare modal
  let modalWin = document.getElementById("popup1");
  let modalLoose = document.getElementById("popup2");
+ let modalStart = document.getElementById("popup3");
+
+
+// declare sounds
+const timerSoung = document.getElementById("2minutes");
+const winSoung   = document.getElementById("winSoung");
+const loseSoung  = document.getElementById("loseSoung");
 
  // array fpour les cartes "ouvertes"
 var openedCards = [];
 
+let best = document.getElementById('best');
+// GET Request.
+fetch('http://localhost:3000/best', { method: "GET", headers: {"Content-type": "application/json; charset=UTF-8", "Access-Control-Allow-Origin": "true"}})
+    // Handle success
+    .then(response => response.json())  // convert to json
+    .then(json => best.innerHTML = `notre champion.ne est ${json[0].name} avec un score de ${json[0].score}/100`)   //print data to console
+    .catch(err => console.log('Request Failed', err)); // Catch errors
 
 function  shuffle(array) {
 	var  currentIndex = array.length, temporaryValue, randomIndex; // vaut le nombre total de cartes
@@ -34,9 +49,11 @@ function  shuffle(array) {
 	return  array; // une fois fini on retourne le paquet de cartes
 };
 
-document.body.onload = startGame();
-
 function  startGame(){
+	
+	timerSoung.play()
+	closeModal();
+	modalStart.classList.remove("show");
 	// on vide le tableau des cartes ouvertes
 	openedCards = [];
 	// on mélange les cartes
@@ -50,11 +67,11 @@ function  startGame(){
 		cards[i].classList.remove("show", "open", "match", "disabled");
 	}
 	//reset le timer
-	var  twoMinutes = 60 * 2;
 	var  display = document.querySelector('.timer');
-	startTimer(30, display);
-	display.innerHTML = "2 mins 0 secs";
-	clearInterval(interval);
+	clearInterval(countdown);
+	startTimer(100, display);
+	//display.innerHTML = "2 mins 0 secs";
+	
 }
 
 
@@ -115,29 +132,55 @@ function enable(){
 
 var second = 0, minute = 2; hour = 0;
 var timer = document.querySelector(".timer");
-var interval;
-function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10)
-        seconds = parseInt(timer % 60, 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.innerHTML = minutes + " min " + seconds + " secs";
-
-        if (--timer < 0) {
+var countdown;
+var score = 0;
+function startTimer(duration) {
+	
+	var percent = duration / 100;
+	
+    var timer = duration;
+	var reverse_counter = 0;
+    countdown = setInterval(function () {
+		score = duration - reverse_counter;
+		document.getElementById("pbar").style.width = ++reverse_counter +"%";
+        if (reverse_counter == duration) {
+			clearInterval(countdown)
+			timerSoung.pause();
+			loseSoung.play();
             loose()
-            timer = duration;
+            reverse_counter = duration;
         }
     }, 1000);
+
+}
+function saveScore(){
+	const name = document.getElementById('name').value;
+/* 	var score = timer.innerHTML; */
+	fetch("http://localhost:3000/player",
+	{
+		method: "POST",
+		headers: {
+			'Accept': 'application/json, text/plain, */*',
+			'Content-Type': 'application/json'
+		  },
+		body: JSON.stringify({name: name, score: score})
+	})
+	.then(function(res){ return res.json(); })
+	.then(function(data){ 
+		modalWin.classList.remove("show");
+		alert("votre score à bien été sauvegarder !")
+		modalStart.classList.add("show");
+		})
 }
 
 function  congratulations(){
 	if (matchedCard.length == 16){
-		clearInterval(interval);
-		finalTime = timer.innerHTML;
+		timerSoung.pause()
+		winSoung.play();
+		clearInterval(countdown);
+		finalTime = score;
+		// on enregistre le score
+
 		// on montre la modal si on a toutes les cartes matcher
 		modalWin.classList.add("show");
 		document.getElementById("totalTime").innerHTML = finalTime;
@@ -146,7 +189,8 @@ function  congratulations(){
 	};
 }
 function loose() {
-		clearInterval(interval);
+	timerSoung.pause()
+		clearInterval(countdown);
 		modalLoose.classList.add("show");
 		closeModal();
 };
@@ -154,12 +198,13 @@ function loose() {
 function closeModal(){
     closeWin.addEventListener("click", function(e){
         modalWin.classList.remove("show");
-        startGame();
     });
     closeLoose.addEventListener("click", function(e){
         modalLoose.classList.remove("show");
-        startGame();
     })
+	closeStart.addEventListener("click", function(e){
+		modalStart.classList.remove("show");
+	})
 }
 
 function playAgain(){

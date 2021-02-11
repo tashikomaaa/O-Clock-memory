@@ -8,15 +8,13 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+
     <div class="container">
-        <header>
-            <h1>Memory Game</h1>
-        </header>
-
+        <div class="">
+            <div class="ribbon ribbon-top-left"><span>Memory game</span></div>
+          </div>
         <section class="score-panel">
-            <div class="timer">
-            </div>
-
+            <p id="best"></p>
             <div class="restart" onclick=startGame()>
         		<i class="fa fa-repeat"></i>
         	</div>
@@ -72,7 +70,9 @@
                 <img src="images/ubuntu.png" />
             </li>
         </ul>
-
+        <div id="myProgress" class="meter red">
+            <span style="width: 0%" id="pbar"></span>
+        </div>
         <div id="popup1" class="overlay">
             <div class="popup">
                 <h2>Bravo 🎉</h2>
@@ -81,13 +81,19 @@
                     Bravo vous tu à gagner 🎉🎉
                 </div>
                 <div class="content-2">
-                    <p>avec comme temps <span id=totalTime> </span> </p>
+                    <p>avec comme score <span id=totalTime> </span>/100 </p>
                 </div>
-                <button id="play-again"onclick="playAgain()">
+                <div class="content-2">
+                    <label for="name">votre nom</label>
+                    <input id="name" />
+                </div>
+                <button class="button" id="save" onClick="saveScore()">Sauvegarder votre temps</button>
+                <button class="button" id="play-again" onclick="playAgain()">
                     jouer encore ? 😄</a>
                 </button>
             </div>
         </div>
+
         <div id="popup2" class="overlay">
             <div class="popup">
                 <h2>Perdu</h2>
@@ -95,13 +101,43 @@
                 <div class="content-1">
                     Tu à dépasser le temps donné !
                 </div>
+                <div class="content-2">
+                    <label for="name">votre nom</label>
+                    <input id="name" />
+                </div>
+                <button class="button" id="save" onClick="saveScore()">Sauvegarder votre temps</button>
                 <button id="play-again"onclick="playAgain()">
                     jouer encore ? 😄</a>
                 </button>
             </div>
         </div>
-
+        <div id="popup3" class="overlay show">
+            <div class="popup">
+                <h2>Hello !!</h2>
+                <a class="close closeStart" href=# >×</a>
+                <div class="content-1">
+                    Vous avez 2 minutes pour matcher toutes les cartes !
+                </div>
+                <button class="button" id="play" onclick="startGame()">
+                    Prêt ? 😄</a>
+                </button>
+            </div>
+        </div>
     </div>
+    
+    <audio id="2minutes">
+        <source src="musics/2-minutes.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="winSoung">
+        <source src="musics/success.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="loseSoung">
+        <source src="musics/lose.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <script src="js/app.js"></script>
 </body>
 </html>
