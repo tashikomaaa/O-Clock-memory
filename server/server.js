@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 // Get the best score
 app.get('/best', (req, res) => {
-  sql.query('select name, MAX(score) as score from players',(err, result) => {   
+  sql.query('select * from players where score = (select max(score) from players)',(err, result) => {   
     if (err) {
         console.log("error: ", err);
         return;
