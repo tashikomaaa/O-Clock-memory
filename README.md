@@ -12,6 +12,8 @@ Pour ma part je travail avec:
 
 Aujourd'hui on va créer un **jeu de memory** !
 
+![demo](./doc/demo.gif)
+
 ## Les outils
 
 Pour les besoins de ce projet on va travailler et découvrir les outils suivants:
